@@ -5,6 +5,7 @@ import { env } from 'process'
 import { errorResponse } from '@/helpers/error-response'
 import { translate } from './cases/translate'
 import { timestamp as handleTimestamp } from './cases/timestamp'
+import { timezone } from './cases/timezone'
 
 export async function POST(request: NextRequest) {
   const signature = request.headers.get('x-signature-ed25519')
@@ -40,9 +41,12 @@ export async function POST(request: NextRequest) {
         if (!options) return errorResponse('❌ No options provided.')
         return await translate(options, user)
       }
+      case 'timezone':
+        if (!options) return errorResponse('❌ No options provided.')
+        return await timezone(options, user)
       case 'timestamp': {
         if (!options) return errorResponse('❌ No options provided.')
-        return await handleTimestamp(options)
+        return await handleTimestamp(options, user)
       }
     }
   }

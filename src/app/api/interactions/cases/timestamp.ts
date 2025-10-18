@@ -2,13 +2,16 @@ import {
   InteractionType,
   InteractionResponseType,
   APIApplicationCommandInteractionDataOption,
+  APIUser,
 } from 'discord-api-types/v10'
 import { NextResponse } from 'next/server'
 import { parse } from 'date-fns'
 import { fromZonedTime } from 'date-fns-tz'
+import { redis } from '@/helpers/redis/connection'
 
 export const timestamp = async (
   options: APIApplicationCommandInteractionDataOption<InteractionType.ApplicationCommand>[],
+  user: APIUser,
 ) => {
   const dateOption = options.find((opt) => opt.name === 'date')!
   const dateValue =
@@ -23,6 +26,8 @@ export const timestamp = async (
       : '00:00'
 
   const date = parse(`${dateValue} ${timeValue}`, 'yyyy-MM-dd HH:mm', new Date())
+
+  const timezone = await redis.get(`timezone:${user.id}`)
   const utcDate = fromZonedTime(date, 'UTC')
   const unixTimestamp = Math.floor(utcDate.getTime() / 1000)
 

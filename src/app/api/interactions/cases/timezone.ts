@@ -21,8 +21,9 @@ export const timezone = async (
 
   return NextResponse.json({
     type: InteractionResponseType.ChannelMessageWithSource,
+    flags: 64,
     data: {
-      content: `The selected timezone is: ${timezoneValue}`,
+      content: `You have set your timezone to: ${timezoneValue}`,
     },
   })
 }
