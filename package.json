@@ -6,22 +6,33 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "register-commands": "tsx --env-file=.env src/helpers/commands/register-commands"
   },
   "dependencies": {
+    "@types/ws": "^8.18.1",
+    "@upstash/redis": "^1.35.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "deepl-node": "^1.20.0",
+    "discord-api-types": "^0.38.15",
+    "discord-interactions": "^4.3.0",
+    "next": "15.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.6"
+    "redis": "^5.8.3",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "tsx": "^4.20.3",
+    "typescript": "^5"
   }
 }
