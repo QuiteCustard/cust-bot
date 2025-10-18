@@ -27,9 +27,9 @@ export const timestamp = async (
 
   const date = parse(`${dateValue} ${timeValue}`, 'yyyy-MM-dd HH:mm', new Date())
 
-  const timezone = await redis.get(`timezone:${user.id}`)
-  const utcDate = fromZonedTime(date, 'UTC')
-  const unixTimestamp = Math.floor(utcDate.getTime() / 1000)
+  const timezone: string | null = await redis.get(`timezone:${user.id}`)
+  const dateWithTimezone = fromZonedTime(date, timezone ?? 'UTC')
+  const unixTimestamp = Math.floor(dateWithTimezone.getTime() / 1000)
 
   return NextResponse.json({
     type: InteractionResponseType.ChannelMessageWithSource,
