@@ -47,7 +47,8 @@ const timezone: Command = {
 
 const timestamp: Command = {
   name: 'timestamp',
-  description: "Generate a Discord timestamp that shows in everyone's local timezone",
+  description:
+    "Generate a Discord timestamp that shows in everyone's local timezone (if you have not set your timezone, UTC will be used)",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
