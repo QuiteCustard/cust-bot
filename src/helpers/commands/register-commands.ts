@@ -13,10 +13,12 @@ const registerCommands = async () => {
     body: JSON.stringify(commands),
   })
 
-  if (!response.ok)
+  if (!response.ok) {
+    const errorData = await response.text()
     return console.error(
-      `Error registering commands: ${response.url}: ${response.status} ${response.statusText}`,
+      `Error registering commands: ${response.url}: ${response.status} ${response.statusText}\nError details: ${errorData}`,
     )
+  }
 
   const data = await response.json()
   return data

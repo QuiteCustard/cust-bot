@@ -10,7 +10,7 @@ export const timezones = [
   { name: 'Hawaii Time', value: 'Pacific/Honolulu' },
 
   // Europe
-  { name: 'Greenwich Mean Time', value: 'Europe/London' },
+  { name: 'British Time', value: 'Europe/London' },
   { name: 'Central European Time', value: 'Europe/Berlin' },
   { name: 'Eastern European Time', value: 'Europe/Helsinki' },
   { name: 'Moscow Time', value: 'Europe/Moscow' },
@@ -36,7 +36,4 @@ export const timezones = [
   // South America
   { name: 'Brazil Time (São Paulo)', value: 'America/Sao_Paulo' },
   { name: 'Argentina Time', value: 'America/Argentina/Buenos_Aires' },
-
-  // Africa
-  { name: 'South Africa Time', value: 'Africa/Johannesburg' },
 ]
