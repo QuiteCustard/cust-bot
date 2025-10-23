@@ -6,6 +6,8 @@ import { errorResponse } from '@/helpers/error-response'
 import { translate } from './cases/translate'
 import { timestamp as handleTimestamp } from './cases/timestamp'
 import { timezone } from './cases/timezone'
+import { pay } from './cases/pay'
+import { earnings } from './cases/earnings'
 
 export async function POST(request: NextRequest) {
   const signature = request.headers.get('x-signature-ed25519')
@@ -37,17 +39,22 @@ export async function POST(request: NextRequest) {
     if (!user?.id) return errorResponse('❌ User ID not found in interaction.')
 
     switch (name) {
-      case 'translate': {
+      case 'translate':
         if (!options) return errorResponse('❌ No options provided.')
         return await translate(options, user)
-      }
+
       case 'timezone':
         if (!options) return errorResponse('❌ No options provided.')
         return await timezone(options, user)
-      case 'timestamp': {
+      case 'timestamp':
         if (!options) return errorResponse('❌ No options provided.')
         return await handleTimestamp(options, user)
-      }
+
+      case 'pay':
+        if (!options) return errorResponse('❌ No options provided.')
+        return await pay(user, options)
+      case 'earnings':
+        return await earnings()
     }
   }
 }

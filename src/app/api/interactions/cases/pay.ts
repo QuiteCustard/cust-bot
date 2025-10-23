@@ -1,3 +1,4 @@
+import { errorResponse } from '@/helpers/error-response'
 import { redis } from '@/helpers/redis/connection'
 import { UserData } from '@/helpers/types'
 import {
@@ -8,29 +9,34 @@ import {
 } from 'discord-api-types/v10'
 import { NextResponse } from 'next/server'
 
-export const timezone = async (
-  options: APIApplicationCommandInteractionDataOption<InteractionType.ApplicationCommand>[],
+export const pay = async (
   user: APIUser,
+  options: APIApplicationCommandInteractionDataOption<InteractionType.ApplicationCommand>[],
 ) => {
-  const timezoneOption = options.find((opt) => opt.name === 'timezone')!
-  const timezoneValue =
-    'value' in timezoneOption && typeof timezoneOption.value == 'string'
-      ? timezoneOption.value
-      : 'UTC'
+  const amountOption = options.find((opt) => opt.name === 'amount')!
+  const amountValue =
+    'value' in amountOption && typeof amountOption.value == 'number' ? amountOption.value : 0
+
+  if (amountValue <= 0) return errorResponse('❌ Amount must be greater than zero :(')
 
   const userKey = `user:${user.id}`
 
-  // Get existing user data or create new structure
   const existingUserData: UserData | null = await redis.json.get(userKey)
 
   let userData: UserData
   if (existingUserData) {
-    // User exists, merge timezone into existing data
-    userData = { ...existingUserData, timezone: timezoneValue }
-  } else {
-    // User doesn't exist, create new document
     userData = {
-      timezone: timezoneValue,
+      ...existingUserData,
+      payments: {
+        ...(existingUserData.payments || {}),
+        [user.id]: (existingUserData.payments?.[user.id] || 0) + amountValue,
+      },
+    }
+  } else {
+    userData = {
+      payments: {
+        [user.id]: amountValue,
+      },
       discord: {
         username: user.username ?? '',
         global_name: user.global_name ?? '',
@@ -38,14 +44,12 @@ export const timezone = async (
     }
   }
 
-  // Set the complete user data
   await redis.json.set(userKey, '$', userData)
 
   return NextResponse.json({
     type: InteractionResponseType.ChannelMessageWithSource,
-    flags: 64,
     data: {
-      content: `You have set your timezone to: ${timezoneValue}`,
+      content: `Successfully paid Custard £${amountValue}`,
     },
   })
 }

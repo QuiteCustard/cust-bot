@@ -67,4 +67,26 @@ const timestamp: Command = {
   default_member_permissions: null,
 }
 
-export const commands = [translate, timezone, timestamp]
+const pay: Command = {
+  name: 'pay',
+  description: 'Send a payment to Custard',
+  type: ApplicationCommandType.ChatInput,
+  options: [
+    {
+      type: ApplicationCommandOptionType.Number,
+      name: 'amount',
+      description: 'The amount to pay (max £1,000)',
+      required: true,
+    },
+  ],
+  default_member_permissions: null,
+}
+
+const earnings: Command = {
+  name: 'earnings',
+  description: 'Custards total earnings',
+  type: ApplicationCommandType.ChatInput,
+  default_member_permissions: null,
+}
+
+export const commands = [translate, timezone, timestamp, pay, earnings]
