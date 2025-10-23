@@ -8,6 +8,7 @@ import {
   InteractionType,
 } from 'discord-api-types/v10'
 import { NextResponse } from 'next/server'
+import { env } from 'process'
 
 export const pay = async (
   user: APIUser,
@@ -19,7 +20,7 @@ export const pay = async (
 
   if (amountValue <= 0) return errorResponse('❌ Amount must be greater than zero :(')
 
-  const userKey = `user:${user.id}`
+  const userKey = `user:${env.CUSTARD_DISCORD_ID}`
 
   const existingUserData: UserData | null = await redis.json.get(userKey)
 
