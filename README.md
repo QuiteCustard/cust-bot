@@ -4,13 +4,13 @@ A Discord slash-command bot built on Next.js. Discord sends interactions over HT
 
 ## Commands
 
-| Command      | Options                                          | What it does                                                                                                                                                  |
-| ------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/translate` | `text` (required), `target_language` (required)  | Translates the text with DeepL and posts it publicly, prefixed with a mention of the caller. The target language is picked from a fixed list of 25 languages.   |
-| `/timezone`  | `timezone` (required)                            | Saves the caller's IANA timezone (picked from a fixed list) to Redis. Replies ephemerally.                                                                     |
+| Command      | Options                                           | What it does                                                                                                                                                                            |
+| ------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/translate` | `text` (required), `target_language` (required)   | Translates the text with DeepL and posts it publicly, prefixed with a mention of the caller. The target language is picked from a fixed list of 25 languages.                           |
+| `/timezone`  | `timezone` (required)                             | Saves the caller's IANA timezone (picked from a fixed list) to Redis. Replies ephemerally.                                                                                              |
 | `/timestamp` | `date` (required, `DD/MM/YYYY`), `time` (`HH:MM`) | Converts the date and time from the caller's saved timezone (UTC if none is set) into a Discord `<t:…:f>` timestamp that renders in each viewer's local time. Time defaults to `00:00`. |
-| `/pay`       | `amount` (required, number)                      | Records a payment from the caller to Custard. Adds the amount to the caller's running total under Custard's Redis document. Rejects amounts of zero or less.      |
-| `/earnings`  | none                                             | Posts an embed leaderboard of the top 10 payers to Custard, ranked by total amount, with the grand total and contributor count in the footer.                  |
+| `/pay`       | `amount` (required, number)                       | Records a payment from the caller to Custard. Adds the amount to the caller's running total under Custard's Redis document. Rejects amounts of zero or less.                            |
+| `/earnings`  | none                                              | Posts an embed leaderboard of the top 10 payers to Custard, ranked by total amount, with the grand total and contributor count in the footer.                                           |
 
 Validation failures (bad date format, missing options, non-positive amounts) are returned as ephemeral error messages.
 
@@ -75,10 +75,10 @@ Each user is a JSON document at `user:<discordId>`:
 
 ## Scripts
 
-| Script                   | Purpose                                             |
-| ------------------------ | --------------------------------------------------- |
-| `pnpm dev`               | Start Next.js in development mode with Turbopack.   |
-| `pnpm build`             | Production build.                                   |
-| `pnpm start`             | Serve the production build.                         |
-| `pnpm lint`              | Run ESLint.                                         |
-| `pnpm register-commands` | Push the command definitions to Discord.            |
+| Script                   | Purpose                                           |
+| ------------------------ | ------------------------------------------------- |
+| `pnpm dev`               | Start Next.js in development mode with Turbopack. |
+| `pnpm build`             | Production build.                                 |
+| `pnpm start`             | Serve the production build.                       |
+| `pnpm lint`              | Run ESLint.                                       |
+| `pnpm register-commands` | Push the command definitions to Discord.          |
